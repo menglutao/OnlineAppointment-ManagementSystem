@@ -1,0 +1,389 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Appointments app - backend</display-name>
+  <description>Appointments app - backend</description>
+
+  <!-- Welcome page-->
+  <welcome-file-list>
+    <welcome-file>/jsp/welcome.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- Servlet declaration -->
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>servlet.UserServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CompanyServlet</servlet-name>
+    <servlet-class>servlet.CompanyServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>CustomerServlet</servlet-name>
+    <servlet-class>servlet.CustomerServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DepartmentServlet</servlet-name>
+    <servlet-class>servlet.DepartmentServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ServiceServlet</servlet-name>
+    <servlet-class>servlet.ServiceServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>TimeslotServlet</servlet-name>
+    <servlet-class>servlet.TimeslotServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>RestManagerServlet</servlet-name>
+    <servlet-class>servlet.RestManagerServlet</servlet-class>
+  </servlet>
+
+  <!-- Servlet mapping -->
+
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/verify</url-pattern>
+  </servlet-mapping>
+
+  <!--<servlet-mapping>
+    <servlet-name>CompanyServlet</servlet-name>
+    <url-pattern>/company</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CompanyServlet</servlet-name>
+    <url-pattern>/company/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/makeAppointments</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/getTimeslotsByServiceId</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DepartmentServlet</servlet-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </servlet-mapping>-->
+
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/appointment/new</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/getTimeslotsByServiceId</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/getServicesByCompany</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CustomerServlet</servlet-name>
+    <url-pattern>/customer/appointment/update</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>RestManagerServlet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Filter declaration -->
+
+  <!-- General User auth filter -->
+  <filter>
+    <filter-name>ProtectedResourceFilter</filter-name>
+    <filter-class>filter.ProtectedResourceFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>ProtectedResourceFilter</filter-name>
+    <url-pattern>/company/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>ProtectedResourceFilter</filter-name>
+    <url-pattern>/customer/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>ProtectedResourceFilter</filter-name>
+    <url-pattern>/logout</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>ProtectedResourceFilter</filter-name>
+    <url-pattern>/profile</url-pattern>
+  </filter-mapping>
+
+  <!-- CustomerServlet ACL-->
+  <filter>
+    <filter-name>CustomerServletACLFilter</filter-name>
+    <filter-class>filter.RoleBasedFilter</filter-class>
+
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>CustomerServlet</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/customer , GET</param-name>
+      <param-value>customer</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/customer/getTimeslotsByServiceId , GET</param-name>
+      <param-value>customer</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/customer/getServicesByCompany , GET</param-name>
+      <param-value>customer</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/customer/appointment/new , GET/POST</param-name>
+      <param-value>customer</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/customer/appointment/[0-9]+/delete , GET</param-name>
+      <param-value>customer</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CustomerServletACLFilter</filter-name>
+    <url-pattern>/customer</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CustomerServletACLFilter</filter-name>
+    <url-pattern>/customer/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CustomerServletACLFilter</filter-name>
+    <url-pattern>/customer/appointment/*</url-pattern>
+  </filter-mapping>
+
+
+  <!-- CompanyServlet ACL-->
+  <filter>
+    <filter-name>CompanyServletACLFilter</filter-name>
+    <filter-class>filter.RoleBasedFilter</filter-class>
+
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>CompanyServlet</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/company , GET/POST</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/profile , GET/POST</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CompanyServletACLFilter</filter-name>
+    <url-pattern>/company</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CompanyServletACLFilter</filter-name>
+    <url-pattern>/company/profile</url-pattern>
+  </filter-mapping>
+
+  <!-- DepartmentServlet ACL-->
+  <filter>
+    <filter-name>DepartmentServletACLFilter</filter-name>
+    <filter-class>filter.RoleBasedFilter</filter-class>
+
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>DepartmentServlet</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/company/department/[0-9]+ , GET</param-name>
+      <param-value>manager,admin,secretary</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/new , GET/POST</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/profile , GET/POST</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/delete , GET</param-name>
+      <param-value>admin</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/company/department/[0-9]+/secretary/add , GET/POST</param-name>
+      <param-value>admin,manager</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/secretary/delete , POST</param-name>
+      <param-value>admin,manager</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>DepartmentServletACLFilter</filter-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </filter-mapping>
+
+  <!-- ServiceServlet ACL-->
+  <filter>
+    <filter-name>ServiceServletACLFilter</filter-name>
+    <filter-class>filter.RoleBasedFilter</filter-class>
+
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>ServiceServlet</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+ , GET</param-name>
+      <param-value>manager,admin,secretary</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+ , POST</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/create , GET/POST</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/delete , GET</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>ServiceServletACLFilter</filter-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </filter-mapping>
+
+  <!-- TimeslotServlet ACL -->
+  <filter>
+    <filter-name>TimeslotServletACLFilter</filter-name>
+    <filter-class>filter.RoleBasedFilter</filter-class>
+
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>TimeslotServlet</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/[0-9]+ , GET</param-name>
+      <param-value>manager,admin,secretary</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/[0-9]+ , POST</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/create , GET/POST</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/[0-9]+/delete , GET</param-name>
+      <param-value>manager,admin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/[0-9]+/syncAppointments , POST</param-name>
+      <param-value>manager,admin,secretary</param-value>
+    </init-param>
+    <init-param>
+      <param-name>/company/department/[0-9]+/service/[0-9]+/timeslot/[0-9]+/appointment/[0-9]+/delete , GET</param-name>
+      <param-value>manager,admin,secretary</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>TimeslotServletACLFilter</filter-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </filter-mapping>
+
+
+  <!-- Timeslot sub path dispatcher
+  <filter>
+    <filter-name>TimeslotSubPathFilter</filter-name>
+    <filter-class>filter.SubPathFilter</filter-class>
+    <init-param>
+      <param-name>subPathPattern</param-name>
+      <param-value>/company/department/[0-9]+/service/[0-9]+/timeslot/.+</param-value>
+    </init-param>
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>TimeslotServlet</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>TimeslotSubPathFilter</filter-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </filter-mapping>-->
+
+  <!-- Service sub path dispatcher
+  <filter>
+    <filter-name>ServiceSubPathFilter</filter-name>
+    <filter-class>filter.SubPathFilter</filter-class>
+    <init-param>
+      <param-name>subPathPattern</param-name>
+      <param-value>/company/department/[0-9]+/service/.+</param-value>
+    </init-param>
+    <init-param>
+      <param-name>subPathServlet</param-name>
+      <param-value>ServiceServlet</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>ServiceSubPathFilter</filter-name>
+    <url-pattern>/company/department/*</url-pattern>
+  </filter-mapping>-->
+</web-app>

@@ -1,0 +1,55 @@
+
+#no_appo_txt {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.appointment_container {
+    margin-bottom: 2em;
+    margin-right: 2em;
+    padding: 1em;
+
+    border: 2px solid #ced4da;
+    border-radius: 0.2em;
+}
+
+.appointment_container.active {
+    transition: border-color, box-shadow;
+    transition-property: border-color, box-shadow;
+    transition-duration: 0.2s, 0.2s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s;
+}
+
+.appointment_container.active:hover {
+    box-shadow: 0 0 0 0.3em rgba(13,110,253,.25);
+    border-color: #86b7fe;
+}
+
+.pen-icon {
+    font-size:1em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+}
+
+.x-icon {
+    font-size:1.4em;
+    margin-right: 0.4em;
+}
+
+.cancel-button {
+    display: inline;
+    float: right;
+}
+
+.update-button {
+    display: inline;
+    float: right;
+    margin-right: 2%;
+}
+
+.appointment_status.badge{
+    font-size: 0.7em;
+    position: relative;
+    top: 7px;
+}
